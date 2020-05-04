@@ -69,7 +69,7 @@ Ball.prototype.update = function() {
 
 Ball.prototype.collisionDetect = function() {
     for (let i = 0; i < balls.length; i++) {
-        if (!(this === balls[i])) {
+        if (!(this === balls[i]) && balls[i].exists) {
             let distanceX = this.coordinateX - balls[i].coordinateX;
             let distanceY = this.coordinateY - balls[i].coordinateY;
             let ballsDistance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
@@ -180,6 +180,7 @@ function loop() {
         if (balls[i].exists) {
             balls[i].draw();
             balls[i].update();
+            balls[i].collisionDetect();
         }
     }
 
