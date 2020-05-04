@@ -4,8 +4,11 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
-const counterView = document.querySelector('p');
+const counterView = document.getElementById('counter');
 let ballCounter = 0;
+
+const gameOverView = document.getElementById('gameOver');
+const restartButton = document.getElementById('restartButton');
 
 let balls = [];
 
@@ -138,6 +141,9 @@ DeathCircle.prototype.collisionDetect = function() {
             if (ballsDistance < (this.size + balls[i].size)) {
                 balls[i].exists = false;
                 ballCounter--;
+                if (ballCounter === 0) {
+                    gameOver();
+                }
             }
         }
     }
@@ -179,5 +185,21 @@ function loop() {
 
     requestAnimationFrame(loop);
 }
+
+function gameOver() {
+    gameOverView.style.display = 'flex';
+}
+
+function restartGame() {
+    gameOverView.style.display ='none';
+
+    for (let i = 0; i < balls.length; i++) {
+        balls[i].exists = true; 
+    }
+
+    ballCounter = balls.length;
+}
+
+restartButton.addEventListener('click', restartGame);
 
 loop();
